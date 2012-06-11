@@ -28,14 +28,16 @@ public class MySQLDAOFactory extends DAOFactory {
 	private static ComboPooledDataSource pool = null;
 
 	// array with queries to clean the database
-	private static String[] SQL_CLEAN_DATABASE = { "delete from [ENTRY]					",
-			"delete from [PARAMETERVALUE]			", "delete from [EXECUTION]				",
-			"delete from [MATCHERPARAMETER]			", "delete from [STEP]						",
-			"delete from [MATCHER]					", "delete from [VALIDNAMESPACE]			",
-			"delete from [CPROPERTY]				", "delete from [PROPERTY]					",
-			"delete from [INSTANCE]					", "delete from [CLASS]					",
-			"delete from [ELEMENT]					", "delete from [DATASET]					",
-			"delete from [SCHEMA]					", "delete from [MATCHABLE]				" };
+	private static String[] SQL_CLEAN_DATABASE = {
+			"delete from `bench`.`VALIDNAMESPACE`			",
+			"delete from `bench`.`CPROPERTY`				",
+			"delete from `bench`.`PROPERTYv					",
+			"delete from `bench`.`INSTANCE`					",
+			"delete from `bench`.`CLASS`					",
+			"delete from `bench`.`ELEMENT`					",
+			"delete from `bench`.`DATASET`					",
+			"delete from `bench`.`SCHEMA`					",
+			"delete from `bench`.`MATCHABLE`				" };
 
 	/****************************************************
 	 * static methods
