@@ -121,7 +121,7 @@ class MySQLSchemaDAO extends SchemaDAO {
 	private static final String SQL_NEW_ELEMENT = "INSERT INTO `bench`.`ELEMENT` (SCHEMAID,URI,LABEL,COMMENT) VALUES(?,?,?,?)";
 	private static final String SQL_NEW_INSTANCE = "INSERT INTO `bench`.`INSTANCE` (SCHEMAID,URI,CLASS_SCHEMAID,CLASS_URI,DATASETSEQ,MATCHABLEID) VALUES (?,?,?,?,?,?)";
 	private static final String SQL_NEW_MATCHABLE = "INSERT INTO `bench`.`MATCHABLE` (MATCHABLEID) VALUES (?)";
-	private static final String SQL_NEW_PROPERTY = "INSERT INTO `bench`.`PROPERTY` (SCHEMAID,URI,DATATYPE) VALUES (?,?,?)";
+	private static final String SQL_NEW_PROPERTY = "INSERT INTO `bench`.`PROPERTY` (SCHEMAID,URI,DATATYPE,VALUE) VALUES (?,?,?,?)";
 	/******************************************
 	 * SQL Queries BEGIN
 	 */
@@ -797,7 +797,10 @@ class MySQLSchemaDAO extends SchemaDAO {
 			pst.setInt(1, schemaId);
 			pst.setString(2, URI);
 			pst.setLong(3, mid);
-			pst.executeUpdate();
+
+			if (!this.exists("CLASS", schemaId, URI))
+				pst.executeUpdate();
+
 		} catch (final SQLException ex) {
 			log.error("Error trying to create a new Class", ex);
 			throw new QueryException(ex);
@@ -835,6 +838,9 @@ class MySQLSchemaDAO extends SchemaDAO {
 			pst.setString(4, propertyURI);
 			pst.setLong(5, mid);
 			pst.executeUpdate();
+
+			con.commit();
+
 		} catch (final SQLException ex) {
 			log.error("Error trying to create a new CProperty", ex);
 			throw new QueryException(ex);
@@ -892,6 +898,8 @@ class MySQLSchemaDAO extends SchemaDAO {
 			pst.setString(7, name);
 			pst.executeUpdate();
 
+			con.commit();
+
 			// everything ok
 			dsbean = new DataSetBean();
 			dsbean.setDatasetseq(newSeq);
@@ -937,7 +945,11 @@ class MySQLSchemaDAO extends SchemaDAO {
 		pst.setString(2, URI);
 		pst.setString(3, label);
 		pst.setString(4, comment);
-		pst.executeUpdate();
+
+		if (!this.exists("ELEMENT", schemaId, URI))
+			pst.executeUpdate();
+
+		con.commit();
 	}
 
 	@Override
@@ -1044,8 +1056,9 @@ class MySQLSchemaDAO extends SchemaDAO {
 
 	@Override
 	public boolean newProperty(final int schemaId, final String URI,
-			final String label, final String comment, final String datatype)
-			throws DataSourceConnectionException, QueryException {
+			final String label, final String comment, final String datatype,
+			final String value) throws DataSourceConnectionException,
+			QueryException {
 		log.debug("Client asks for a new property with URI value equals to "
 				+ URI);
 		// A property may be related with various classes. So, search if the
@@ -1076,8 +1089,12 @@ class MySQLSchemaDAO extends SchemaDAO {
 			pst.setInt(1, schemaId);
 			pst.setString(2, URI);
 			pst.setString(3, datatype);
+			pst.setString(4, value);
 
-			pst.executeUpdate();
+			if (!this.exists("PROPERTY", schemaId, URI))
+				pst.executeUpdate();
+
+			con.commit();
 		} catch (final SQLException ex) {
 			log.error("Error trying to create a new Property", ex);
 			throw new QueryException(ex);
@@ -1123,6 +1140,9 @@ class MySQLSchemaDAO extends SchemaDAO {
 					schemadate.getTime());
 			pst.setDate(2, sqldate);
 			pst.executeUpdate();
+
+			con.commit();
+
 			rs = pst.getGeneratedKeys();
 			rs.next();
 			final int schemaid = rs.getInt(1);
@@ -1171,5 +1191,40 @@ class MySQLSchemaDAO extends SchemaDAO {
 			con = null;
 		}
 		return sbean;
+	}
+
+	private boolean exists(String tableName, long schemaId, String uri) {
+		Connection con = null;
+		try {
+			con = factory.getConnection();
+		} catch (DataSourceConnectionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		PreparedStatement pst = null;
+		PreparedStatement pstName = null;
+		ResultSet rs = null;
+
+		try {
+			pst = con.prepareStatement("SELECT * FROM `" + tableName
+					+ "` WHERE SCHEMAID = " + schemaId + " AND URI = '" + uri
+					+ "';");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			rs = pst.executeQuery();
+
+			if (rs.next())
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

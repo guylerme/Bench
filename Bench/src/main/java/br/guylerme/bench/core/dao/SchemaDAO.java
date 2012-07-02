@@ -169,11 +169,6 @@ public abstract class SchemaDAO {
 			String comment, String classURI, int dataSetSeq)
 			throws DataSourceConnectionException, QueryException;
 
-	/** @pdOid 815d0473-4396-4ade-85ac-d9b945fde359 */
-	public abstract boolean newProperty(int schemaId, String URI, String label,
-			String comment, String datatype)
-			throws DataSourceConnectionException, QueryException;
-
 	/**
 	 * @param schemaName
 	 * @pdOid 93e4ce51-0c45-4b9d-90dc-6d4d77bdfd04
@@ -182,4 +177,18 @@ public abstract class SchemaDAO {
 			List<String> validNamespaces)
 			throws SchemaNameAlreadyExistsException, QueryException,
 			DataSourceConnectionException;
+
+	public boolean newProperty(int schemaId, String URI, String label,
+			String comment, String datatype, String value)
+			throws DataSourceConnectionException, QueryException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean newProperty(int schemaId, String URI, String label,
+			String comment, String datatype)
+			throws DataSourceConnectionException, QueryException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
