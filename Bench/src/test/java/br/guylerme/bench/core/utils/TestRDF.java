@@ -56,36 +56,54 @@ public class TestRDF {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String inputFileName = "c:/dataset-1610.rdf";
 
-		// create an empty model
-		Model model = ModelFactory.createDefaultModel();
+		// final String path =
+		// "D:/Documents and Settings/cy85/Meus documentos/Downloads/";
+		// final String filename = "all";
 
-		// use the FileManager to find the input file
-		InputStream in = FileManager.get().open(inputFileName);
-		if (in == null) {
-			throw new IllegalArgumentException("File: " + inputFileName
-					+ " not found");
-		}
+		final String path = "D:/Documents and Settings/cy85/Meus documentos/Downloads/Amazon-eBay/amazon3-all/";
+		final String filename = "amazon3-all.owl";
 
-		// read the RDF/XML file
-		model.read(in, null);
+		final List<String> validNamespaces = new ArrayList<String>();
+		// validNamespaces.add("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		// validNamespaces.add("http://www.w3.org/2000/01/rdf-schema#");
 
-		ResIterator ri = model.listSubjects();
-		while (ri.hasNext()) {
-			Resource resource = ri.next();
+		validNamespaces.add("http://protege.stanford.edu/plugins/owl/protege#");
+		validNamespaces
+				.add("http://www.owl-ontologies.com/2005/08/07/xsp.owl#");
+		validNamespaces
+				.add("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#");
+		validNamespaces
+				.add("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#");
+		validNamespaces.add("http://www.w3.org/2003/11/swrlb#");
+		validNamespaces
+				.add("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#");
+		validNamespaces
+				.add("http://swrl.stanford.edu/ontologies/built-ins/3.3/tbox.owl#");
+		validNamespaces.add("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		validNamespaces.add("http://www.amazon.com/ontology#");
+		validNamespaces.add("http://www.w3.org/2002/07/owl#");
+		validNamespaces
+				.add("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#");
+		validNamespaces
+				.add("http://swrl.stanford.edu/ontologies/built-ins/3.3/abox.owl#");
+		validNamespaces.add("http://www.w3.org/2001/XMLSchema#");
+		validNamespaces.add("http://www.w3.org/2003/11/swrl#");
+		validNamespaces.add("http://www.w3.org/2000/01/rdf-schema#");
+		validNamespaces
+				.add("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
 
-			
-			
-			StmtIterator si = resource.listProperties();
-			while (si.hasNext()) {
-				Statement s = si.next();
-				System.out.println(resource.getURI() + " has property "
-						+ s.getPredicate() + " with value " + s.getObject());
-			}
+		final String name = "Amazon";
 
-		}
+		Map<String, Object> parameters = new HashMap<String, Object>();
 
+		parameters.put("path", path);
+		parameters.put("filename", filename);
+		parameters.put("validNamespace", validNamespaces);
+		parameters.put("name", name);
+
+		NewSchema ns = new NewSchema();
+		ns.execute(parameters);
 	}
 
 	private void testeCargaNewSchema() {
@@ -157,13 +175,18 @@ public class TestRDF {
 		return schema;
 	}
 
-	private void testarPersistenciaECarga() {
-		final File file = new File("c:/dataset-1610.rdf");
-		String schemaName = "Rank Gender Race";
+	private static void testarPersistenciaECarga() {
+		// final File file = new File("c:/dataset-1610.rdf");
+		final File file = new File(
+				"D:/Documents and Settings/cy85/Meus documentos/Downloads/all");
+		// String schemaName = "Rank Gender Race";
+		String schemaName = "Music Brainz";
 		List<String> validNamespaces = new ArrayList<String>();
-		validNamespaces.add("Rank Gender Race");
+		// validNamespaces.add("Rank Gender Race");
+		validNamespaces.add("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		validNamespaces.add("http://www.w3.org/2000/01/rdf-schema#");
 
-		ComboPooledDataSource pool = new ComboPooledDataSource();
+		// ComboPooledDataSource pool = new ComboPooledDataSource();
 
 		DAOFactory dao = null;
 		try {
@@ -188,11 +211,19 @@ public class TestRDF {
 		}
 
 		try {
-			File f = new File("c:/dataset-1610.rdf");
+			// File f = new File("c:/dataset-1610.rdf");
+			File f = new File(
+					"D:/Documents and Settings/cy85/Meus documentos/Downloads/all");
 			InputStream file2 = new FileInputStream(f);
-			dao.getSchemaDao().newDataSet(schema2.getSchemaid(),
-					"c:/dataset-1610.rdf", "http://www.data.gov", file2,
-					f.length(), "dataset-1610.rdf");
+			// dao.getSchemaDao().newDataSet(schema2.getSchemaid(),
+			// "c:/dataset-1610.rdf", "http://www.data.gov", file2, f.length(),
+			// "dataset-1610.rdf");
+			dao.getSchemaDao()
+					.newDataSet(
+							schema2.getSchemaid(),
+							"all",
+							"D:/Documents and Settings/cy85/Meus documentos/Downloads/",
+							file2, f.length(), "Music Brainz");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -276,4 +307,35 @@ public class TestRDF {
 			e.printStackTrace();
 		}
 	}
+
+	private void leituraRDF() {
+		String inputFileName = "c:/dataset-1610.rdf";
+
+		// create an empty model
+		Model model = ModelFactory.createDefaultModel();
+
+		// use the FileManager to find the input file
+		InputStream in = FileManager.get().open(inputFileName);
+		if (in == null) {
+			throw new IllegalArgumentException("File: " + inputFileName
+					+ " not found");
+		}
+
+		// read the RDF/XML file
+		model.read(in, null);
+
+		ResIterator ri = model.listSubjects();
+		while (ri.hasNext()) {
+			Resource resource = ri.next();
+
+			StmtIterator si = resource.listProperties();
+			while (si.hasNext()) {
+				Statement s = si.next();
+				System.out.println(resource.getURI() + " has property "
+						+ s.getPredicate() + " with value " + s.getObject());
+			}
+
+		}
+	}
+
 }

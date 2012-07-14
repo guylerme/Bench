@@ -74,8 +74,7 @@ public class TestXMLReader {
 
 		SchemaBean schema = null;
 		try {
-			schema = dao.getSchemaDao().newSchema(schemaName,
-					validNamespaces);
+			schema = dao.getSchemaDao().newSchema(schemaName, validNamespaces);
 		} catch (SchemaNameAlreadyExistsException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -104,13 +103,12 @@ public class TestXMLReader {
 						|| triple.getObject().toString().endsWith("\"")) {
 					prop = new PropertyBean();
 					prop.setSchemaid(schema.getSchemaid());
-					prop.setValue(triple.getObject().toString());
 					prop.setUri(triple.getSubject().toString());
 					prop.setLabel(triple.getPredicate().toString());
 
 					dao.getSchemaDao().newProperty(prop.getSchemaid(),
 							prop.getUri(), prop.getLabel(), prop.getComment(),
-							prop.getDatatype(), prop.getValue());
+							prop.getDatatype());
 				} else {
 					cls = new ClassBean();
 					cls.setSchemaid(schema.getSchemaid());

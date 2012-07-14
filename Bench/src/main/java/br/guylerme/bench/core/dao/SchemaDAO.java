@@ -178,17 +178,8 @@ public abstract class SchemaDAO {
 			throws SchemaNameAlreadyExistsException, QueryException,
 			DataSourceConnectionException;
 
-	public boolean newProperty(int schemaId, String URI, String label,
-			String comment, String datatype, String value)
-			throws DataSourceConnectionException, QueryException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean newProperty(int schemaId, String URI, String label,
+	public abstract boolean newProperty(int schemaId, String URI, String label,
 			String comment, String datatype)
-			throws DataSourceConnectionException, QueryException {
-		// TODO Auto-generated method stub
-		return false;
-	}
+			throws DataSourceConnectionException, QueryException;
+
 }

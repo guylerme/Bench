@@ -121,7 +121,7 @@ class MySQLSchemaDAO extends SchemaDAO {
 	private static final String SQL_NEW_ELEMENT = "INSERT INTO `bench`.`ELEMENT` (SCHEMAID,URI,LABEL,COMMENT) VALUES(?,?,?,?)";
 	private static final String SQL_NEW_INSTANCE = "INSERT INTO `bench`.`INSTANCE` (SCHEMAID,URI,CLASS_SCHEMAID,CLASS_URI,DATASETSEQ,MATCHABLEID) VALUES (?,?,?,?,?,?)";
 	private static final String SQL_NEW_MATCHABLE = "INSERT INTO `bench`.`MATCHABLE` (MATCHABLEID) VALUES (?)";
-	private static final String SQL_NEW_PROPERTY = "INSERT INTO `bench`.`PROPERTY` (SCHEMAID,URI,DATATYPE,VALUE) VALUES (?,?,?,?)";
+	private static final String SQL_NEW_PROPERTY = "INSERT INTO `bench`.`PROPERTY` (SCHEMAID,URI,DATATYPE) VALUES (?,?,?)";
 	/******************************************
 	 * SQL Queries BEGIN
 	 */
@@ -1056,9 +1056,8 @@ class MySQLSchemaDAO extends SchemaDAO {
 
 	@Override
 	public boolean newProperty(final int schemaId, final String URI,
-			final String label, final String comment, final String datatype,
-			final String value) throws DataSourceConnectionException,
-			QueryException {
+			final String label, final String comment, final String datatype)
+			throws DataSourceConnectionException, QueryException {
 		log.debug("Client asks for a new property with URI value equals to "
 				+ URI);
 		// A property may be related with various classes. So, search if the
@@ -1089,7 +1088,6 @@ class MySQLSchemaDAO extends SchemaDAO {
 			pst.setInt(1, schemaId);
 			pst.setString(2, URI);
 			pst.setString(3, datatype);
-			pst.setString(4, value);
 
 			if (!this.exists("PROPERTY", schemaId, URI))
 				pst.executeUpdate();
@@ -1227,4 +1225,5 @@ class MySQLSchemaDAO extends SchemaDAO {
 		}
 		return false;
 	}
+
 }
