@@ -61,39 +61,52 @@ public class TestRDF {
 		// "D:/Documents and Settings/cy85/Meus documentos/Downloads/";
 		// final String filename = "all";
 
-		final String path = "D:/Documents and Settings/cy85/Meus documentos/Downloads/Amazon-eBay/amazon3-all/";
-		final String filename = "amazon3-all.owl";
+		final String path = "C:/Documents and Settings/Administrador/Meus documentos/Downloads/Amazon-eBay/ebay2-data/";
+		final String filename = "ebay2-all.owl";
 
 		final List<String> validNamespaces = new ArrayList<String>();
 		// validNamespaces.add("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 		// validNamespaces.add("http://www.w3.org/2000/01/rdf-schema#");
 
+		/*
+		 * validNamespaces.add("http://protege.stanford.edu/plugins/owl/protege#"
+		 * ); validNamespaces
+		 * .add("http://www.owl-ontologies.com/2005/08/07/xsp.owl#");
+		 * validNamespaces
+		 * .add("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#");
+		 * validNamespaces
+		 * .add("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#");
+		 * validNamespaces.add("http://www.w3.org/2003/11/swrlb#");
+		 * validNamespaces
+		 * .add("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#"
+		 * ); validNamespaces
+		 * .add("http://swrl.stanford.edu/ontologies/built-ins/3.3/tbox.owl#");
+		 * validNamespaces.add("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		 * validNamespaces.add("http://www.amazon.com/ontology#");
+		 * validNamespaces.add("http://www.w3.org/2002/07/owl#");
+		 * validNamespaces
+		 * .add("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#"
+		 * ); validNamespaces
+		 * .add("http://swrl.stanford.edu/ontologies/built-ins/3.3/abox.owl#");
+		 * validNamespaces.add("http://www.w3.org/2001/XMLSchema#");
+		 * validNamespaces.add("http://www.w3.org/2003/11/swrl#");
+		 * validNamespaces.add("http://www.w3.org/2000/01/rdf-schema#");
+		 * validNamespaces
+		 * .add("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
+		 */
+
+		validNamespaces.add("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 		validNamespaces.add("http://protege.stanford.edu/plugins/owl/protege#");
 		validNamespaces
 				.add("http://www.owl-ontologies.com/2005/08/07/xsp.owl#");
-		validNamespaces
-				.add("http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#");
-		validNamespaces
-				.add("http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#");
-		validNamespaces.add("http://www.w3.org/2003/11/swrlb#");
-		validNamespaces
-				.add("http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#");
-		validNamespaces
-				.add("http://swrl.stanford.edu/ontologies/built-ins/3.3/tbox.owl#");
-		validNamespaces.add("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-		validNamespaces.add("http://www.amazon.com/ontology#");
 		validNamespaces.add("http://www.w3.org/2002/07/owl#");
-		validNamespaces
-				.add("http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#");
-		validNamespaces
-				.add("http://swrl.stanford.edu/ontologies/built-ins/3.3/abox.owl#");
 		validNamespaces.add("http://www.w3.org/2001/XMLSchema#");
 		validNamespaces.add("http://www.w3.org/2003/11/swrl#");
+		validNamespaces.add("http://www.w3.org/2003/11/swrlb#");
+		validNamespaces.add("http://www.ebay.com/ontology#");
 		validNamespaces.add("http://www.w3.org/2000/01/rdf-schema#");
-		validNamespaces
-				.add("http://swrl.stanford.edu/ontologies/3.3/swrla.owl#");
 
-		final String name = "Amazon";
+		final String name = "eBay";
 
 		Map<String, Object> parameters = new HashMap<String, Object>();
 
