@@ -1,0 +1,150 @@
+<project name="OntoVizTab" default="deploy" basedir=".">
+    <description>Build File for OntoVizTab, last updated 05-Feb-04</description>
+    <!-- To get OntoViz to work I had to do the following:
+        
+         - In ExportDot.java and GraphPanel.java, comment out the
+           dfki.util import 
+           //import dfki.util.*;
+           
+           - In OntovizTab.java, add the following line to the
+             initialize() method: 
+                setClsTree(itsClsesPanel.itsClsTree);
+           
+           - Write this build file to compile the source and generate
+             the jar file (with images, and the correct manifest!) 
+           
+           Changes:
+             - v0.2 Made the split screen movable
+             - v0.3 Avoids ClassCastException by using Reference
+                   Interface in ExportDot.java instead of MemoryReference
+                   class 
+                    Added deploy target to this build file (Assumes
+                    OntovizTab sits under the Protege home directory) 
+    -->
+    
+  <!-- set global properties for this build -->
+  <property environment="env"/>
+  <property name="protege.home" value="${env.PROTEGE_HOME}"/>
+  <property file="local.properties"/>
+  
+  <property name="src"     location="./src"/>
+  <property name="build"   location="./build"/>
+  <property name="classes" location="${build}/classes"/>
+  
+  <property name="protege-jar" location="${protege.home}/protege.jar"/>
+  <property name="ontoviz-jar" location="${build}/ontoviz-tab.jar"/>
+  <property name="grappa-jar"  location="./lib/grappa1_2.jar"/>
+  <property name="plugins.dir" location="${protege.home}/plugins/dfki.protege.ontoviz"/>
+
+   <!-- 
+     #  ********** Finding Protege Libraries. *************
+     -->
+
+    <target name = "checkProtegeLibs">
+      <echo message="Using Protege Home = ${protege.home} to find protege jars"/>
+      <condition property="libs.found">
+        <and>
+          <available file="${protege-jar}" type = "file"/>
+        </and>
+      </condition>
+    </target>
+
+    <target name="checkProtegeLibsAndReport" depends="checkProtegeLibs"
+            unless="libs.found">
+      <echo message="Missing protege libraries.  You need to set "/>
+      <echo message="the PROTEGE_HOME environment variable to a"/>
+      <echo message="protege installation directory where the"/>
+      <echo message="appropriate plugins have been installed."/>
+      <echo message="Alternatively set the jar libs in local.properties (protege.lib=...)"/>
+      <echo message="Use the -v option to ant to see what jars are missing."/>
+      <fail message = "missing protege libraries"/>
+    </target>
+
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <mkdir dir="${classes}"/>
+  </target>
+
+  <target name="compile" 
+          depends="init, checkProtegeLibsAndReport" 
+          description="compile the source " >
+    <javac srcdir="${src}" destdir="${classes}" 
+           classpath="${protege-jar};${grappa-jar}" 
+           debug="yes"/>
+  </target>
+
+  <target name="dist" depends="compile"
+          description="generate the distribution" >
+    <jar jarfile="${ontoviz-jar}"
+         basedir="${classes}"/>
+    <!-- Put the GIFs in, and add the manifest -->
+    <jar jarfile="${ontoviz-jar}" 
+         basedir="${src}" 
+         update="true" 
+         includes="**/*.gif" excludes="**/*.java">
+        <manifest>
+            <attribute name="Built-By" value="${user.name}"/>
+            <section name="dfki/protege/ontoviz_tab/OntovizTab.class">
+                <attribute name="Tab-Widget" value="True"/>
+            </section>
+        </manifest>
+    </jar>
+  </target>
+  
+  <target name="deploy" 
+          depends="dist" 
+          description="deploys plug-in jar to the plug-ins folder">
+      <copy file="${ontoviz-jar}" todir="${plugins.dir}"/>
+      <copy file="${grappa-jar}"  todir="${plugins.dir}"/>
+      <copy todir="${plugins.dir}">
+          <fileset dir="./docs"/>
+      </copy>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} directory tree -->
+    <delete dir="${build}"/>
+  </target>
+
+  <target name="debug" depends="deploy">
+      <java fork="true" dir="${protege.home}" 
+            classname="edu.stanford.smi.protege.Application">
+          <jvmarg value = "-Xdebug"/>
+          <jvmarg value = "-Xrunjdwp:transport=dt_socket,address=8100,server=y,suspend=y"/> 
+          <classpath>
+              <pathelement path="${protege.home}/protege.jar"/>
+              <pathelement path="${protege.home}/looks-2.1.3.jar"/>
+              <pathelement path="${protege.home}/unicode_panel.jar"/>
+              <pathelement path="${protege.home}/driver.jar"/>
+              <pathelement path="${protege.home}/driver1.jar"/>
+          </classpath>
+      </java>
+  </target>
+	
+  <target name="run" depends="deploy">
+      <java fork="true" dir="${protege.home}" 
+            classname="edu.stanford.smi.protege.Application">
+          <classpath>
+              <pathelement path="${protege.home}/protege.jar"/>
+              <pathelement path="${protege.home}/looks-2.1.3.jar"/>
+              <pathelement path="${protege.home}/unicode_panel.jar"/>
+              <pathelement path="${protege.home}/driver.jar"/>
+              <pathelement path="${protege.home}/driver1.jar"/>
+          </classpath>
+      </java>
+  </target>
+
+  <target name="usage">
+      <echo message="remember to set the PROTEGE_HOME environment variable"/>
+      <echo message="dist   - generate the ontoviz jar file"/>
+      <echo message="deploy - deploy to Protege as a plugin"/>
+      <echo message="run    - deploy the plugin and start Protege"/>
+      <echo message="debug  - start the protege so it can be debugged remotely"/>
+      <echo message="clean  - remove the temporary build files"/>
+      <echo message="usage  - print this help message"/>
+  </target>
+
+</project>

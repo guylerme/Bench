@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 
 import br.guylerme.bench.core.beans.DataSetBean;
 import br.guylerme.bench.core.beans.SchemaBean;
+import br.guylerme.bench.core.commands.schema.NewIndividualElements;
 import br.guylerme.bench.core.commands.schema.NewSchema;
 import br.guylerme.bench.core.dao.DAOFactory;
 import br.guylerme.bench.core.dao.exception.DataSourceConnectionException;
@@ -117,6 +118,7 @@ public class TestRDF {
 
 		NewSchema ns = new NewSchema();
 		ns.execute(parameters);
+
 	}
 
 	private void testeCargaNewSchema() {

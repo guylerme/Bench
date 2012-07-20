@@ -1,0 +1,11 @@
+EZPal Tab System Requirements
+-----------------------------
+
+1. You must have the PAL Tabs installed (the PAL Tabs are bundled with the 
+   "full" installation of Protege).
+
+2. You must include the "template.pprj" project (located in the 
+   "<protege-install-dir>/plugins/edu.stanford.smi.protegex.ezpal/doc" 
+   directory) in your project.  This step has to be performed before you can 
+   configure Protege to show the EZPal Tab.
+

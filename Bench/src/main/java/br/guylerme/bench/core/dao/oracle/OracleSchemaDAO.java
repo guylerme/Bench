@@ -122,6 +122,9 @@ class OracleSchemaDAO extends SchemaDAO {
 	private static final String SQL_NEW_INSTANCE = "INSERT INTO bench.\"INSTANCE\" (SCHEMAID,URI,CLASS_SCHEMAID,CLASS_URI,DATASETSEQ,MATCHABLEID) VALUES (?,?,?,?,?,?)";
 	private static final String SQL_NEW_MATCHABLE = "INSERT INTO bench.\"MATCHABLE\" (MATCHABLEID) VALUES (?)";
 	private static final String SQL_NEW_PROPERTY = "INSERT INTO bench.\"PROPERTY\" (SCHEMAID,URI,\"DATATYPE\") VALUES (?,?,?)";
+
+	private static final String SQL_NEW_INDIVIDUAL_CLASS = "INSERT INTO bench.\"INDIVIDUAL_CLASS\" (CLASS_SCHEMAID,CLASS_URI,\"VALUE\") VALUES(?,?,?)";
+	private static final String SQL_NEW_INDIVIDUAL_PROPERTY = "INSERT INTO bench.\"INDIVIDUAL_PROPERTY\" (PROPERTY_SCHEMAID,PROPERTY_URI,\"VALUE\", INDIVIDUAL_CLASS_CLASS_SCHEMAID, INDIVIDUAL_CLASS_CLASS_URI, INDIVIDUAL_CLASS_VALUE) VALUES(?,?,?,?,?,?)";
 	/******************************************
 	 * SQL Queries BEGIN
 	 */
@@ -1279,4 +1282,137 @@ class OracleSchemaDAO extends SchemaDAO {
 		return false;
 	}
 
+	@Override
+	public void newIndividualClass(String uri, int schemaid, String tableName,
+			String value) throws DataSourceConnectionException, QueryException,
+			SQLException {
+		log.debug("Creating a new element individual of URI " + uri
+				+ "with value " + value);
+		Connection con = null;
+		PreparedStatement pst = null;
+
+		con = factory.getConnection();
+		pst = con.prepareStatement(SQL_NEW_INDIVIDUAL_CLASS);
+		pst.setInt(1, schemaid);
+		pst.setString(2, uri);
+		pst.setString(3, value);
+
+		if ((!this.existsIndividualClass(schemaid, uri, value))
+				&& (this.exists(tableName, schemaid, uri)))
+			pst.executeUpdate();
+
+		con.commit();
+
+	}
+
+	private boolean existsIndividualClass(long schemaId, String uri,
+			String value) {
+		Connection con = null;
+		try {
+			con = factory.getConnection();
+		} catch (DataSourceConnectionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		PreparedStatement pst = null;
+		PreparedStatement pstName = null;
+		ResultSet rs = null;
+
+		try {
+			pst = con.prepareStatement("SELECT * FROM INDIVIDUAL_CLASS"
+					+ " WHERE CLASS_SCHEMAID = " + schemaId
+					+ " AND CLASS_URI = '" + uri + "' AND \"VALUE\" = '"
+					+ value + "';");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			rs = pst.executeQuery();
+
+			if (rs.next())
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public void newIndividualProperty(String propertyName, int schemaId,
+			String tableName, String propertyValue, String className,
+			String classValue) throws DataSourceConnectionException,
+			SQLException {
+		log.debug("Creating a new individual individual of URI " + propertyName
+				+ "with value " + propertyValue);
+		Connection con = null;
+		PreparedStatement pst = null;
+
+		con = factory.getConnection();
+		pst = con.prepareStatement(SQL_NEW_INDIVIDUAL_PROPERTY);
+		pst.setInt(1, schemaId);
+		pst.setString(2, propertyName);
+		pst.setString(3, propertyValue);
+		pst.setInt(4, schemaId);
+		pst.setString(5, className);
+		pst.setString(6, classValue);
+
+		if ((!this.existsIndividualProperty(schemaId, propertyName,
+				propertyValue, className, classValue))
+				&& (this.exists(tableName, schemaId, propertyName)))
+			pst.executeUpdate();
+
+		con.commit();
+
+	}
+
+	private boolean existsIndividualProperty(int schemaId, String propertyName,
+			String propertyValue, String className, String classValue) {
+		Connection con = null;
+		try {
+			con = factory.getConnection();
+		} catch (DataSourceConnectionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		PreparedStatement pst = null;
+		PreparedStatement pstName = null;
+		ResultSet rs = null;
+
+		try {
+			pst = con
+					.prepareStatement("SELECT * FROM INDIVIDUAL_PROPERTY WHERE PROPERTY_SCHEMAID = "
+							+ schemaId
+							+ " AND PROPERTY_URI = '"
+							+ propertyName
+							+ "' AND \"VALUE\" = '"
+							+ propertyValue
+							+ "' AND INDIVIDUAL_CLASS_CLASS_SCHEMAID = "
+							+ schemaId
+							+ " AND INDIVIDUAL_CLASS_CLASS_URI = '"
+							+ className
+							+ "' AND INDIVIDUAL_CLASS_CLASS_VALUE = '"
+							+ classValue + "';");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			rs = pst.executeQuery();
+
+			if (rs.next())
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

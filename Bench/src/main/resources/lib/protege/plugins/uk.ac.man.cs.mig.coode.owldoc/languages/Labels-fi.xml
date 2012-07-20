@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited by pekka.valta@okobank.com 14.3.2006-->
+<OWLDoc>
+	<Description name="Finnish"/>
+	<Labels>
+		<label labelname="DisjointClasses" value="Eriävät luokat"/>
+		<label labelname="Relationships" value="Suhteet"/>
+		<label labelname="AbstractSyntax" value="Abstrakti syntaksi"/>
+		<label labelname="DifferentFrom" value="Eri kuin"/>
+		<label labelname="Class" value="Luokka"/>
+		<label labelname="Annotations" value="Huomautukset"/>
+		<label labelname="AllAnnotationProperties" value="Kaikki huomautussuhteet"/>
+		<label labelname="AnnotationProperties" value="Huomautussuhteet"/>
+		<label labelname="Symmetric" value="Symmetrinen"/>
+		<label labelname="AllObjectProperties" value="Kaikki objektisuhteet"/>
+		<label labelname="AllResource" value="Kaikki resurssit"/>
+		<label labelname="Individuals" value="Instanssit"/>
+		<label labelname="Types" value="Tyypit"/>
+		<label labelname="Contents" value="Sisältö"/>
+		<label labelname="InverseFunctional" value="Käänteistoimiva"/>
+		<label labelname="Imports" value="Tuonti"/>
+		<label labelname="SameAs" value="Sama kuin"/>
+		<label labelname="Characteristics" value="Piirteet"/>
+		<label labelname="Resources" value="Resurssit"/>
+		<label labelname="Range" value="Ulottuvuus"/>
+		<label labelname="EquivalentClasses" value="Vastaavat luokat"/>
+		<label labelname="AllDatatypeProperties" value="Kaikki tietotyyppisuhteet"/>
+		<label labelname="Domain" value="Piiri"/>
+		<label labelname="DomainOf" value="PiiriJostakin"/>
+		<label labelname="Superclasses" value="Yliluokat"/>
+		<label labelname="DefaultNamespace" value="Oletusnimiavaruus"/>
+		<label labelname="Functional" value="Toimiva"/>
+		<label labelname="AllClasses" value="Kaikki luokat"/>
+		<label labelname="SuperProperties" value="Yläsuhteet"/>
+		<label labelname="AllIndividuals" value="Kaikki instanssit"/>
+		<label labelname="InverseProperty" value="Käänteissuhde"/>
+		<label labelname="Usage" value="Käyttö"/>
+		<label labelname="DatatypeProperties" value="Tietotyyppisuhteet"/>
+		<label labelname="EquivalentProperties" value="Vastaavat suhteet"/>
+		<label labelname="ClassDescriptionDefinition" value="Luokkakuvauksen määritykset"/>
+		<label labelname="Transitive" value="Transitiivinen"/>
+		<label labelname="Classes" value="Luokat"/>
+		<label labelname="ObjectProperties" value="Objektisuhteet"/>
+		<label labelname="Hierarchy" value="Hierarkia"/>
+		<label labelname="Ontology" value="Ontologia"/>
+		<label labelname="Namespaces" value="Nimiavaruudet"/>
+	</Labels>
+</OWLDoc>

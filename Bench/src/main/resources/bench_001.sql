@@ -165,3 +165,23 @@ CREATE TABLE `bench`.`VALIDNAMESPACE`(
 	`NAMESPACE` ASC
 )
 );
+
+CREATE TABLE `bench`.`ELEMENT_INDIVIDUAL`
+(
+    `VALUE`                longtext,
+    SCHEMAID             int NOT NULL ,
+    URI                  VARCHAR(700) NOT NULL,
+    CONSTRAINT `PK_ELIN` PRIMARY KEY
+    (
+        `SCHEMAID` ASC,
+        `URI` ASC
+    )
+);
+
+
+
+
+
+ALTER TABLE `bench`.`ELEMENT_INDIVIDUAL`
+    ADD CONSTRAINT `FK_ELEM_ELIN` FOREIGN KEY (`SCHEMAID`, `URI`) REFERENCES `bench`.`ELEMENT` (`SCHEMAID`, `URI`);
+

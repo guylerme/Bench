@@ -6,6 +6,7 @@ package br.guylerme.bench.core.dao;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
@@ -181,5 +182,14 @@ public abstract class SchemaDAO {
 	public abstract boolean newProperty(int schemaId, String URI, String label,
 			String comment, String datatype)
 			throws DataSourceConnectionException, QueryException;
+
+	public abstract void newIndividualClass(String uri, int schemaid,
+			String tableName, String value)
+			throws DataSourceConnectionException, QueryException, SQLException;
+
+	public abstract void newIndividualProperty(String propertyName,
+			int schemaId, String tableName, String propertyValue,
+			String className, String classValue)
+			throws DataSourceConnectionException, SQLException;
 
 }

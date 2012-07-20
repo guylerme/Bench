@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OWLDoc>
+    <Description name="Chinese"/>
+    <Labels>
+        <label labelname="DisjointClasses" value="不相交类"/>
+        <label labelname="Relationships" value="关系"/>
+        <label labelname="AbstractSyntax" value="抽象语法"/>
+        <label labelname="DifferentFrom" value="不同于"/>
+        <label labelname="Class" value="类"/>
+        <label labelname="Annotations" value="注释"/>
+        <label labelname="AllAnnotationProperties" value="所有注释属性"/>
+        <label labelname="AnnotationProperties" value="注释属性"/>        
+        <label labelname="Symmetric" value="对称性"/>
+        <label labelname="AllObjectProperties" value="所有对象属性"/>
+        <label labelname="AllResource" value="所有资源"/>
+        <label labelname="Individuals" value="个体"/>
+        <label labelname="Types" value="类型"/>
+        <label labelname="Contents" value="目录"/>
+        <label labelname="InverseFunctional" value="反函数性"/>
+        <label labelname="Imports" value="导入"/>
+        <label labelname="SameAs" value="相同于"/>
+        <label labelname="Characteristics" value="特性"/>
+        <label labelname="Resources" value="资源"/>
+        <label labelname="Range" value="范围"/>
+        <label labelname="EquivalentClasses" value="等价类 (充分必要条件)"/>
+        <label labelname="AllDatatypeProperties" value="所有数据类型属性"/>
+        <label labelname="Domain" value="域"/>
+        <label labelname="DomainOf" value="之域"/>
+        <label labelname="Superclasses" value="超类"/>
+        <label labelname="DefaultNamespace" value="默认名称空间"/>
+        <label labelname="Functional" value="函数性"/>
+        <label labelname="AllClasses" value="所有类"/>
+        <label labelname="SuperProperties" value="超属性"/>
+        <label labelname="AllIndividuals" value="所有个体"/>
+        <label labelname="InverseProperty" value="反属性"/>
+        <label labelname="Usage" value="使用情况"/>
+        <label labelname="DatatypeProperties" value="数据类型属性"/>
+        <label labelname="EquivalentProperties" value="等价属性"/>
+        <label labelname="ClassDescriptionDefinition" value="类描述/定义 (必要条件)"/>
+        <label labelname="Transitive" value="传递性"/>
+        <label labelname="Classes" value="类"/>
+        <label labelname="ObjectProperties" value="对象属性"/>
+        <label labelname="Hierarchy" value="层次结构"/>
+        <label labelname="Ontology" value="本体"/>
+        <label labelname="Namespaces" value="名称空间"/>
+    </Labels>
+</OWLDoc>

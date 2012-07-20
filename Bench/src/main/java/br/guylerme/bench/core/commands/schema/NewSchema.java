@@ -176,7 +176,14 @@ public class NewSchema extends AbstractCommand {
 		map.put("path", path);
 		map.put("name", "Initial dataset");
 
-		final ReturnValue value = newdataset.execute(map, this);
+		// now create a new element individual
+		final NewIndividualElements newElementIndividual = new NewIndividualElements();
+		final HashMap<String, Object> map2 = new HashMap<String, Object>();
+		map.put("schemaid", sbean.getSchemaid());
+		map.put("filename", filename);
+		map.put("path", path);
+
+		final ReturnValue value = newElementIndividual.execute(map, this);
 		return value;
 	}
 }
