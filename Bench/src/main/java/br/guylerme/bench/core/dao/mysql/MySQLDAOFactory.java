@@ -12,6 +12,7 @@ import java.sql.Statement;
 import br.guylerme.bench.core.configuration.Configurator;
 import br.guylerme.bench.core.configuration.exception.BenchConfigurationException;
 import br.guylerme.bench.core.dao.DAOFactory;
+import br.guylerme.bench.core.dao.TransformationDAO;
 import br.guylerme.bench.core.dao.SchemaDAO;
 import br.guylerme.bench.core.dao.exception.DataSourceConnectionException;
 
@@ -30,6 +31,8 @@ public class MySQLDAOFactory extends DAOFactory {
 	// array with queries to clean the database
 	private static String[] SQL_CLEAN_DATABASE = {
 			"delete from `bench`.`VALIDNAMESPACE`			",
+			"delete from `bench`.`INDIVIDUAL_PROPERTY`		",
+			"delete from `bench`.`INDIVIDUAL_CLASS`			",
 			"delete from `bench`.`CPROPERTY`				",
 			"delete from `bench`.`PROPERTYv					",
 			"delete from `bench`.`INSTANCE`					",
@@ -75,6 +78,7 @@ public class MySQLDAOFactory extends DAOFactory {
 	 * Non-static attributes
 	 */
 	private MySQLSchemaDAO schema = null;
+	private MySQLTransformationDAO genTransformation = null;
 
 	/****************************************************
 	 * Non-static methods
@@ -138,6 +142,11 @@ public class MySQLDAOFactory extends DAOFactory {
 			schema.close();
 			schema = null;
 		}
+		
+		if (genTransformation != null) {
+			genTransformation.close();
+			genTransformation = null;
+		}
 
 	}
 
@@ -185,6 +194,15 @@ public class MySQLDAOFactory extends DAOFactory {
 			schema = new MySQLSchemaDAO(this);
 		}
 		return schema;
+	}
+	
+	@Override
+	public TransformationDAO getTransformationDao() {
+		if (genTransformation == null) {
+			// pass the Factory to get the connection
+			genTransformation = new MySQLTransformationDAO(this);
+		}
+		return genTransformation;
 	}
 
 }

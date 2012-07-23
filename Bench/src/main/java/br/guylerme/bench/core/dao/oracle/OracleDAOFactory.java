@@ -9,13 +9,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
+
 import br.guylerme.bench.core.configuration.Configurator;
 import br.guylerme.bench.core.configuration.exception.BenchConfigurationException;
 import br.guylerme.bench.core.dao.DAOFactory;
 import br.guylerme.bench.core.dao.SchemaDAO;
+import br.guylerme.bench.core.dao.TransformationDAO;
 import br.guylerme.bench.core.dao.exception.DataSourceConnectionException;
-
-import org.apache.log4j.Logger;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -30,8 +31,10 @@ public class OracleDAOFactory extends DAOFactory {
 	// array with queries to clean the database
 	private static String[] SQL_CLEAN_DATABASE = {
 			"delete from bench.\"VALIDNAMESPACE\"			",
+			"delete from bench.\"INDIVIDUAL_PROPERTY\"		",
+			"delete from bench.\"INDIVIDUAL_CLASS\"			",
 			"delete from bench.\"CPROPERTY\"				",
-			"delete from bench.\"PROPERTYv					",
+			"delete from bench.\"PROPERTY\"					",
 			"delete from bench.\"INSTANCE\"					",
 			"delete from bench.\"CLASS\"					",
 			"delete from bench.\"ELEMENT\"					",
@@ -75,6 +78,7 @@ public class OracleDAOFactory extends DAOFactory {
 	 * Non-static attributes
 	 */
 	private OracleSchemaDAO schema = null;
+	private OracleTransformationDAO genTransformation = null;
 
 	/****************************************************
 	 * Non-static methods
@@ -185,6 +189,15 @@ public class OracleDAOFactory extends DAOFactory {
 			schema = new OracleSchemaDAO(this);
 		}
 		return schema;
+	}
+
+	@Override
+	public TransformationDAO getTransformationDao() {
+		if (genTransformation == null) {
+			// pass the Factory to get the connection
+			genTransformation = new OracleTransformationDAO(this);
+		}
+		return genTransformation;
 	}
 
 }

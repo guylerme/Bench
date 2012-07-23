@@ -71,4 +71,6 @@ public abstract class DAOFactory {
 	/** @pdOid f8b09cef-87aa-4e20-9eaa-576b02b1e900 */
 	public abstract SchemaDAO getSchemaDao();
 
+	public abstract TransformationDAO getTransformationDao();
+
 }
